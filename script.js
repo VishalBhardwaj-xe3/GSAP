@@ -1,27 +1,39 @@
-const menu = document.querySelector("#nav i");
-const cross = document.querySelector("#full i");
+function breaktheText() {
+  var name1 = document.querySelector("h1");
+  var nam = name1.textContent;
 
-const tl = gsap.timeline()
- tl.to("#full", {
-   right: 0,
-   duration: 0.4 ,
- });
- tl.from("#full h4", {
-   x: 150,
-   duration: 0.4,
-   stagger: 0.05,
-   opacity: 0,
- });
- tl.from("#full i", {
-   opacity: 0,
- });
+  var splitText = nam.split("");
 
- tl.pause()
+  var clutter = "";
 
-menu.addEventListener("click", function(){
-   tl.play()
+  var halfValue = splitText.length/2
+
+  splitText.forEach(function (e,idx) {
+    if (idx < halfValue) {
+      clutter = clutter + `<span class="a">${e}</span>`;
+    } else {
+      clutter = clutter + `<span class="b">${e}</span>`;
+    }
+  });
+
+  name1.innerHTML = clutter;
+}
+
+breaktheText()
+
+
+gsap.from("h1 .a", {
+  y: 50,
+  opacity: 0,
+  duration: 0.6,
+  delay: 0.5,
+  stagger:0.15
 })
 
-cross.addEventListener("click", function () {
-   tl.reverse()
-})
+gsap.from("h1 .b", {
+  y: 50,
+  opacity: 0,
+  duration: 0.6,
+  delay: 0.5,
+  stagger: -0.15,
+});
